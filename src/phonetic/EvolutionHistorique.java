@@ -1,13 +1,66 @@
 package phonetic;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import phonetic.RegleHistorique.WordEvolution;
 import phonetic.Phoneme;
 
-abstract public class EvolutionHistorique {
+public class EvolutionHistorique {
 
-        private static List<RegleHistorique> listeRegles = List.of(
+        public List<RegleHistorique> listeReglesEvolution;
+
+        public EvolutionHistorique() {
+                super();
+                listeReglesEvolution = listeReglesLatinFrancais;
+                // listeReglesEvolution = new ArrayList<RegleHistorique>();
+        }
+
+        public void evolutionHistorique(Word word) {
+                evolutionHistorique(word, "");
+        }
+
+        public void evolutionHistorique(Word word, String commentaire) {
+
+                // try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out,
+                // "UTF-8"))) {
+                try {
+                        PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"));
+                        Word motCourant = word;
+                        writer.println("");
+                        writer.println("\t********");
+                        writer.println("\t** Evolution du mot : "
+                                        + motCourant.IPAformat + " ("
+                                        + listeReglesEvolution.size() + ") "
+                                        + commentaire);
+                        writer.println("\t********\n");
+
+                        for (RegleHistorique rule : listeReglesEvolution) {
+                                WordEvolution evolutionMot = rule.evolue(motCourant);
+                                if (evolutionMot.hasEvolved()) {
+                                        String sortie = String.format("%-" + 7 + "s", "(" + rule.epoque + ")");
+                                        sortie = String.format("%-" + 80 + "s", sortie + rule.description);
+                                        sortie = sortie + motCourant.IPAformat + " --> "
+                                                        + evolutionMot.word().IPAformat;
+                                        writer.println(sortie);
+                                        motCourant = evolutionMot.word();
+                                } else {
+                                        // System.out.println(rule.description + ":\t\t\t\t\t" + "pas d'évolution");
+                                }
+                        }
+                        writer.flush();
+                        return;
+                } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        System.exit(2);
+                }
+
+        }
+
+        private static List<RegleHistorique> listeReglesLatinFrancais = List.of(
                         // voyelle non accentuée en hiatus
                         new RegleSansContexte("([" + Phoneme.C + "])(i)\\.([" + Phoneme.V + "])", "$1j$3",
                                         "voyelle non accentuée en hiatus", -50),
@@ -341,34 +394,5 @@ abstract public class EvolutionHistorique {
                         new RegleSansContexte("ʎ", "j", "relachement l mouillé", 1750),
                         // wa l'emporte p. 29
                         new RegleSansContexte("we", "wa", "wa l'emporte", 1750));
-
-        public static void evolutionHistorique(Word word) {
-                evolutionHistorique(word, "");
-        }
-
-        public static void evolutionHistorique(Word word, String commentaire) {
-                Word motCourant = word;
-                System.out.println("");
-                System.out.println("\t********");
-                System.out.println("\t** Evolution du mot : "
-                                + motCourant.IPAformat + " ("
-                                + EvolutionHistorique.listeRegles.size() + ") "
-                                + commentaire);
-                System.out.println("\t********\n");
-
-                for (RegleHistorique rule : EvolutionHistorique.listeRegles) {
-                        WordEvolution evolutionMot = rule.evolue(motCourant);
-                        if (evolutionMot.hasEvolved()) {
-                                String sortie = String.format("%-" + 7 + "s", "(" + rule.epoque + ")");
-                                sortie = String.format("%-" + 80 + "s", sortie + rule.description);
-                                sortie = sortie + motCourant.IPAformat + " --> " + evolutionMot.word().IPAformat;
-                                System.out.println(sortie);
-                                motCourant = evolutionMot.word();
-                        } else {
-                                // System.out.println(rule.description + ":\t\t\t\t\t" + "pas d'évolution");
-                        }
-                }
-                return;
-        }
 
 }

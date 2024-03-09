@@ -17,6 +17,6 @@ public class Word {
     public String toString() {
         String outputString = "Word [IPAformat=" + IPAformat + "]";
 
-        return outputString;
+        return outputString; 
     }
 }
