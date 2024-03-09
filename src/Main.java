@@ -24,14 +24,11 @@ public class Main {
                       --help, -h : affiche cette aide et quitte
                       --test-encodage : affiche les caractères spéciaux
                       --evolution, -e : définit le fichier des mots à faire évoluer
-                    Les caractères utilisés sont
-                        voyelles : %s
-                        consonnes : %s
                     Exemple :
                         chcp 65001 //pour afficher les caractères spéciaux de l'alphabet phonétique international
                         java --enable-preview -cp . Main --evolution  \"C:\\Users\\tangu\\OneDrive\\Documents\\Mon java\\Phonetic\\ressources\\fiches modèles.txt\"
                     """;
-            System.out.println(String.format(helpMessage, Phoneme.V, Phoneme.C));
+            System.out.println(helpMessage);
             System.exit(0);
         }
 

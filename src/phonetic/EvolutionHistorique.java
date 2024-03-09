@@ -70,8 +70,8 @@ public class EvolutionHistorique {
                                         "voyelle non accentuée en hiatus", -50),
                         // amuissement du m final
                         new RegleSansContexte("(?<=\\..*)m$", "", "amuissement du m final", 0),
-                        // w perd sont articulation vélaire
-                        new RegleSansContexte("w", "β", "w perd sont articulation vélaire", 50),
+                        // w perd son articulation vélaire
+                        new RegleSansContexte("w", "β", "w perd son articulation vélaire", 50),
                         // spirantisation de b en β, p. 63
                         new RegleSansContexte("([" + Phoneme.V + "]-?'?\\.)(b)([" + Phoneme.V + "])", "$1β$3",
                                         "spirantisation de b intervocalique dès Ier s.",
