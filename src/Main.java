@@ -83,7 +83,7 @@ public class Main {
 
         for (WordDataSet.WordRequest wordRequest : wordRequests) {
 
-            evolutionLatinFrancais.evolutionHistorique(new phonetic.Word(wordRequest.IPAformat()),
+            evolutionLatinFrancais.EvolutionHistoriqueOutput(new phonetic.Word(wordRequest.IPAformat()),
                     wordRequest.commentaire());
 
         }

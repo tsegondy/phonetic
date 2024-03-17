@@ -12,7 +12,7 @@ fi'.de;page 96
 fi-'.li.us
 fo'.li.am
 mer.ke-'.dem
-nau'.se.am
+na'u.se.am
 te-'k.tum
 te'.ne.rum
 wi-'.tam

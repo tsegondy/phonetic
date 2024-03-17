@@ -5,7 +5,7 @@ package phonetic;
 public abstract class RegleHistorique {
     String description="";
     Integer epoque=0;
-    public record WordEvolution(Boolean hasEvolved, Word word){}
+    public record WordEvolution(Boolean hasEvolved, RegleHistorique rule, Word initialWord, Word finalWord){}
     
     public RegleHistorique(String description) {
         super();
