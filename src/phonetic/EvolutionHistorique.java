@@ -180,7 +180,12 @@ public class EvolutionHistorique {
                         new RegleRegex("(u)([" + Phoneme.C + "]*)$", "o$2", "changement des u brefs finaux",
                                         450),
                         // palatisation de k+a
-                        new RegleRegex("ka", "tʃa", "palatisation de k+a", 450),
+                        // new RegleRegex("ka", "tʃa", "palatisation de k+a", 450),
+                        // combinaison des transformation k+a
+                        new RegleRegex("(ka')(\\.)", "tʃi'e$2", "palatisation de k+a' libre", 450),
+                        new RegleRegex("(ka)('?)([" + Phoneme.C + "])", "tʃa$2$3", "palatisation de k+a entravé", 450),
+                        new RegleRegex("(ka)(\\.)", "tʃe$2", "palatisation de k+a entravé", 450),
+
                         // spirantisation des occlusives intervocaliques des sourdes intervoliques, p.
                         // 62
                         new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(b)([" + Phoneme.V + "])", "$1β$3",
@@ -216,7 +221,9 @@ public class EvolutionHistorique {
                         // diphtongation spontané de e accentué libre, p. 28
                         new RegleRegex("e'\\.", "e'i\\.", "diphtongation spontané de e accentué libre",
                                         550),
-
+                        // fermeture de la diphtongation spontané de e après consonne palatale, p. 38
+                        new RegleRegex("tse'i", "tsi'", "fermeture de la diphtongation",
+                                        550),
                         /*
                          * VIIe siecle
                          */
@@ -250,6 +257,9 @@ public class EvolutionHistorique {
                         // l devant consonne devient vélaire, p. 16 et 91
                         new RegleRegex("[lʎ]([" + Phoneme.C + "])", "ɫ$1", "l devant consonne devient vélaire",
                                         650),
+                        // fermeture de e ouvert devant n
+                        new RegleRegex("(ɛ')(\\.?)(n)", "e'$2$3", "fermeture de e ouvert devant n",
+                                        650),
                         /*
                          * VIIIe siecle
                          */
@@ -280,7 +290,7 @@ public class EvolutionHistorique {
                         // vocalisation de j après a, page 34
                         new RegleRegex("(a)(-?'?)(j)", "$1$2i", "vocalisation de j après a", 800),
                         // vocalisation de j
-                        new RegleRegex("(e)(-?'?)(j)", "$1i$2", "vocalisation de j", 850),
+                        new RegleRegex("(e)(-?'?)(j)", "$1$2i", "vocalisation de j", 850),
 
                         /*
                          * Xe siecle

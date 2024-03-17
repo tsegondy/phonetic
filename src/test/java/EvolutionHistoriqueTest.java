@@ -52,6 +52,11 @@ public class EvolutionHistoriqueTest {
     }
 
     @Test
+    public void testKarum() {
+        testEvolution("ka'.pum", "ʃɛ'r");
+    }
+
+    @Test
     public void testKomitem() {
         testEvolution("ko'.mi.tem", "kɔ̃'t");
     }
@@ -73,7 +78,7 @@ public class EvolutionHistoriqueTest {
 
     @Test
     public void testFilius() {
-        testEvolution("fi-'.li.us", "fi'");
+        testEvolution("fi-'.li.us", "fi-'");
     }
 
     @Test
