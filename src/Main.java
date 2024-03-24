@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 import phonetic.EvolutionHistorique;
 import phonetic.Phoneme;
 import phonetic.WordDataSet;
@@ -14,6 +15,8 @@ import phonetic.WordDataSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+        boolean modeInteractif = true;
 
         // Vérifiez si l'option --help ou -h est spécifiée dans les arguments de la
         // ligne de commande
@@ -26,7 +29,9 @@ public class Main {
                       --evolution, -e : définit le fichier des mots à faire évoluer
                     Exemple :
                         chcp 65001 //pour afficher les caractères spéciaux de l'alphabet phonétique international
-                        java --enable-preview -cp . Main --evolution  \"C:\\Users\\tangu\\OneDrive\\Documents\\Mon java\\Phonetic\\ressources\\fiches modèles.txt\"
+                        java --enable-preview -cp . Main --evolution  \"C:\\Users\\tangu\\OneDrive\\Documents\\Mon java\\Phonetic\\ressources\\fiches modèles.txt\n
+                        java --enable-preview -cp \"C:\\Users\\tangu\\OneDrive\\Documents\\Mon java\\Phonetic\\bin" Main --evolution  \"C:\\Users\\tangu\\OneDrive\\Documents\\Mon java\\Phonetic\\ressources\\autres mots.txt\"
+
                     """;
             System.out.println(helpMessage);
             System.exit(0);
@@ -51,8 +56,10 @@ public class Main {
         // de commande
         // boolean evolution = false;
         int argIndex = 0;
-        String inputFile = "";
+        String inputFile = null;
+        List<String> wordCommandLine = new ArrayList<String>();
         while (argIndex < args.length) {
+            modeInteractif = false;
             if ("--evolution".equals(args[argIndex]) || "-e".equals(args[argIndex])) {
                 // evolution = true;
                 argIndex++;
@@ -64,27 +71,38 @@ public class Main {
                     break;
                 }
             } else {
+                wordCommandLine.add(args[argIndex]);
                 argIndex++;
             }
         }
-        if (inputFile == "") {
-            System.err.println("Pas de fichier d'évolution défini");
-            System.exit(1);
-            System.out.flush();
-        }
+        /*
+         * if (inputFile == "") {
+         * System.err.println("Pas de fichier d'évolution défini");
+         * System.exit(1);
+         * System.out.flush();
+         * }
+         */
 
         // Lisez le contenu du fichier d'entrée et créez une liste de demandes de mots
+        if (modeInteractif) {
 
-        List<WordDataSet.WordRequest> wordRequests = WordDataSet.readDataSet(inputFile);
+        } else {
+            List<WordDataSet.WordRequest> wordRequests = null;
+            if (inputFile != null) {
+                wordRequests = WordDataSet.readDataSet(inputFile);
+            } else {
+                wordRequests = WordDataSet.wordRequestList(wordCommandLine);
+            }
+            // Traitez chaque demande de mot et affichez l'évolution historique
+            // correspondante
+            EvolutionHistorique evolutionLatinFrancais = new EvolutionHistorique();
 
-        // Traitez chaque demande de mot et affichez l'évolution historique
-        // correspondante
-        EvolutionHistorique evolutionLatinFrancais = new EvolutionHistorique();
+            for (WordDataSet.WordRequest wordRequest : wordRequests) {
 
-        for (WordDataSet.WordRequest wordRequest : wordRequests) {
+                evolutionLatinFrancais.EvolutionHistoriqueOutput(new phonetic.Word(wordRequest.IPAformat()),
+                        wordRequest.commentaire());
 
-            evolutionLatinFrancais.EvolutionHistoriqueOutput(new phonetic.Word(wordRequest.IPAformat()),
-                    wordRequest.commentaire());
+            }
 
         }
 

@@ -91,6 +91,8 @@ public class EvolutionHistorique {
                         new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(b)([" + Phoneme.V + "])", "$1β$3",
                                         "spirantisation de b intervocalique dès Ier s.",
                                         050),
+                        // changement vocalique du a, p. 18
+                        new RegleRegex("a-", "a", "changement vocalique du a", 050),
                         /*
                          * IIe siecle
                          */
@@ -102,6 +104,14 @@ public class EvolutionHistorique {
                         new RegleRegex("(e)([^-])", "ɛ$2", "e bref devient ouvert", 150),
                         // changement vocalique e long devient court
                         new RegleRegex("e-", "e", "e long devient court", 150),
+                        // changement vocalique o court devient ouvert, p. 18
+                        new RegleRegex("o(?!-)", "ɔ", "o court devient ouvert", 150),
+                        // changement vocalique o long devient court, p. 18
+                        new RegleRegex("o-", "o", "o long devient court", 150),
+
+                        // voyelle prothétique devant s et occlusives p. 20
+                        new RegleRegex("^s([" + Phoneme.Cocclusive + "])", "is.$1",
+                                        "voyelle prothétique devant s et occlusives", 150),
 
                         /*
                          * IIIe siecle
@@ -113,15 +123,22 @@ public class EvolutionHistorique {
                          * être neutralisée uniquement
                          */
                         new RegleRegex(
-                                        "(.*)\\.([" + Phoneme.C + "]*)([" + Phoneme.V + "])(?!')([" + Phoneme.C
+                                        "(.*)\\.([" + Phoneme.C + "]*)([" + Phoneme.V + "]-?)(?!')([" + Phoneme.C
                                                         + "]*)\\.([^.]+)",
                                         "$1$2.$4$5'",
                                         "disparition des voyelles penultieme atone", 250),
-                        // la consonne centrale d'un groupe de trois disparait
+                        // la consonne centrale d'un groupe de trois disparait p. 73
+                        // (ça ne donne pas le bon résultat pour certains mots, on écarte si coupe aprés
+                        // 1re consonne)
+                        /*
+                         * new RegleRegex(
+                         * "([" + Phoneme.C + "])(\\.?)([" + Phoneme.C + "])(\\.?)([" + Phoneme.C +
+                         * "])",
+                         * "$1$2$4$5", "la consonne centrale d'un groupe de trois disparait", 250),
+                         */
                         new RegleRegex(
-                                        "([" + Phoneme.C + "])(\\.?)([" + Phoneme.C + "])(\\.?)([" + Phoneme.C + "])",
-                                        "$1$2$4$5", "la consonne centrale d'un groupe de trois disparait", 250),
-
+                                        "([" + Phoneme.C + "])([" + Phoneme.C + "])(\\.?)([" + Phoneme.C + "])",
+                                        "$1$3$4", "la consonne centrale d'un groupe de trois disparait", 250),
                         // épenthèse par dénasalisation
                         new RegleRegex("m\\.r", "m\\.br", "épenthèse par dénasalisation", 250),
                         new RegleRegex("m\\.l", "m\\.bl", "épenthèse par dénasalisation", 250),
@@ -147,19 +164,26 @@ public class EvolutionHistorique {
                         new RegleRegex("(u)(?!\\b|-)\\b", "o$2", "changement des u bref à l'intérieur d'un mot",
                                         350),
                         // diphtongaison romane o ouvert accentué en syllabe ouverte p. 28
-                        new RegleRegex("o'\\.", "uo'\\.",
+                        new RegleRegex("ɔ'\\.", "u'ɔ\\.",
                                         "diphtongaison romane o ouvert accentué en syllabe ouverte", 350),
+                        // à l'initiale non accentuée tout e se ferme p. 39
+                        new RegleRegex("^([" + Phoneme.C + "])*(ɛ)(-?)(?!')", "$1e$3",
+                                        "à l'initiale non accentuée tout e se ferme", 350),
                         // spirantisation en ɣ p. 65
                         new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(g)([" + Phoneme.V + "])", "$1ɣ$3",
                                         "spirantisation en ɣ", 350),
+                        // diphtongaison conditionnée de e accentué par yod, p. 32
+                        new RegleRegex("ɛ'j\\.", "i'ɛj\\.",
+                                        "diphtongaison conditionnée de ɛ accentué par yod",
+                                        350),
                         // sonorisation des sourdes intervocaliques
                         new RegleRegex("([" + Phoneme.V + "]-?'?j?\\.)(s)([" + Phoneme.V + "])", "$1z$3",
                                         "sonorisation de s intervocalique",
                                         350),
-                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(t)([" + Phoneme.V + "])", "$1d$3",
+                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(t)([" + Phoneme.V + "r])", "$1d$3",
                                         "sonorisation de t intervocalique",
                                         375),
-                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(p)([" + Phoneme.V + "])", "$1b$3",
+                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(p)([" + Phoneme.V + "r])", "$1b$3",
                                         "sonorisation de p intervocalique",
                                         375),
                         new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(k)([" + Phoneme.V + "])", "$1g$3",
@@ -209,20 +233,23 @@ public class EvolutionHistorique {
                                         "effet de Bartsh a après consomme palatale", 500),
 
                         // spirantisation des occlusives intervocaliques des sourdes intervoliques
-                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(d)([" + Phoneme.V + "])", "$1ð$3",
+                        new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(d)([" + Phoneme.V + "r])", "$1ð$3",
                                         "spirantisation de d intervocalique",
                                         550),
                         // diphtongation spontané de a accentué libre, p. 30
-                        new RegleRegex("(a)(-?)'\\.", "ae$2'\\.", "diphtongation spontané de a accentué libre",
+                        new RegleRegex("a'\\.", "a'ɛ\\.", "diphtongation spontané de a accentué libre",
                                         550),
-                        // diphtongation spontané de o long accentué libre
-                        new RegleRegex("o-'\\.", "ou'\\.", "diphtongation spontané de o long accentué libre",
+                        // diphtongation spontané de o accentué libre p. 29
+                        new RegleRegex("o'\\.", "o'u\\.", "diphtongation spontané de o accentué libre",
                                         550),
                         // diphtongation spontané de e accentué libre, p. 28
                         new RegleRegex("e'\\.", "e'i\\.", "diphtongation spontané de e accentué libre",
                                         550),
                         // fermeture de la diphtongation spontané de e après consonne palatale, p. 38
                         new RegleRegex("tse'i", "tsi'", "fermeture de la diphtongation",
+                                        550),
+                        // réduction de la diphtongue a'ɛ, p. 30
+                        new RegleRegex("a'ɛ", "ɛ-'", "réduction de la diphtongue a'ɛ",
                                         550),
                         /*
                          * VIIe siecle
@@ -236,6 +263,9 @@ public class EvolutionHistorique {
                                         650),
                         // monophtongaison, p. 30
                         new RegleRegex("ae-'", "ɛ-'", "monophtongaison", 650),
+                        // neutralisation des voyelles finales aprés groupe de consonnes, p. 40
+                        new RegleRegex("([" + Phoneme.C + "][rlmn])([" + Phoneme.V + "])$", "$1ə",
+                                        "neutralisation des voyelles finales aprés groupe de consonnes", 650),
                         // disparition des voyelles finales hors a hors ancien proparoxyton (plus bas)
                         new RegleRegex(
                                         "(\\.)([" + Phoneme.C + "]*)([" + Phoneme.Vhorsa + "]-?)([" + Phoneme.C
@@ -260,6 +290,12 @@ public class EvolutionHistorique {
                         // fermeture de e ouvert devant n
                         new RegleRegex("(ɛ')(\\.?)(n)", "e'$2$3", "fermeture de e ouvert devant n",
                                         650),
+                        // réduction de l'écart d'aperture uo p. 28
+                        new RegleRegex("u'ɔ", "u'o", "réduction de l'écart d'aperture uo",
+                                        650),
+                        // tout o devant n se ferme, p. 96
+                        new RegleRegex("ɔ(-?'?\\.?)n", "o$1n", "tout o devant n se ferme",
+                                        650),
                         /*
                          * VIIIe siecle
                          */
@@ -276,8 +312,9 @@ public class EvolutionHistorique {
                         new RegleRegex("(\\.)([" + Phoneme.C + "]*)(a)(-?)([" + Phoneme.C + "]*)('?)$",
                                         "$1$2ə$5",
                                         "neutralisation du a final", 700),
-                        // fin de la palatalisation de u
-                        // new RegleSansContexte("u", "y", "fin de la palatalisation de u", 750),
+                        // fin de la palatalisation de u, p. 18 100
+                        // (on rajoute la condition hors diphtongue)
+                        new RegleRegex("u(-?)'(?![" + Phoneme.V + "])", "y$1'", "fin de la palatalisation de u", 750),
                         // assourdissement des consonnes finales
                         new RegleRegex("b$", "p", "assourdissement de b final", 750),
                         new RegleRegex("v$", "f", "assourdissement de v final", 750),
@@ -291,12 +328,15 @@ public class EvolutionHistorique {
                         new RegleRegex("(a)(-?'?)(j)", "$1$2i", "vocalisation de j après a", 800),
                         // vocalisation de j
                         new RegleRegex("(e)(-?'?)(j)", "$1$2i", "vocalisation de j", 850),
-
+                        // réduction de triphtongue iei p. 32 99
+                        new RegleRegex("i'ei", "i", "réduction de triphtongue iei", 870),
                         /*
                          * Xe siecle
                          */
                         // nasalisation diphtongale de ie p.50
                         // new RegleSansContexte("ie", "$1i$2", "nasalisation diphtongale de ie", 1050),
+                        // evolution de ðr, p. 64
+                        new RegleRegex("ðr", "r", "evolution de ðr", 950),
                         /*
                          * XIe siecle
                          */
@@ -306,7 +346,7 @@ public class EvolutionHistorique {
                         // nasalisation du e"
                         new RegleRegex("(e)('?)([nm])", "ɛ̃$2$3", "nasalisation du e", 1050),
                         // evolution diphtongation ou p. 28
-                        new RegleRegex("ou", "eu", "evolution diphtongation ou-1", 1050),
+                        new RegleRegex("o'u", "e'u", "evolution diphtongation ou-1", 1050),
                         // evolution e non accentué libre initial
                         new RegleRegex("([" + Phoneme.C + "]*)(e)(-?\\.)", "$1ə$3",
                                         "evolution e non accentué libre initial", 1050),
@@ -315,10 +355,10 @@ public class EvolutionHistorique {
                                         "ð intervocalique disparait",
                                         1050),
                         // fermeture, p. 30
-                        new RegleRegex("ɛ-'", "e-'", "fermeture ɛ", 1050),
+                        new RegleRegex("ɛ-'", "e'", "fermeture ɛ", 1050),
                         // evolution diphtongation uo
-                        new RegleRegex("uo'", "ue'", "evolution diphtongation ou-1", 1050),
-                        new RegleRegex("ue'", "yø'", "evolution diphtongation ou-2", 1050),
+                        new RegleRegex("u'o", "u'e", "evolution diphtongation u'o", 1050),
+                        new RegleRegex("u'e", "y'ø", "evolution diphtongation y'ø", 1050),
                         // a initial non accentué en hiatus
                         new RegleRegex("(^[" + Phoneme.C + "]*)(a)(-?)(\\.[" + Phoneme.V + "])", "$1ə$3$4",
                                         "a initial non accentué en hiatus", 1025),
@@ -336,6 +376,12 @@ public class EvolutionHistorique {
                         // disparition des t, θ finaux après voyelle, p. 59
                         new RegleRegex("([" + Phoneme.V + "]-?'?)[tθ]$", "$1",
                                         "disparition des t, θ finaux après voyelle", 1050),
+                        // disparition des s,z devant consonne, p. 70
+                        new RegleRegex("ɔ(-?'?)([sz])(\\.?[" + Phoneme.C + "])", "o$1$3",
+                                        "disparition des s,z devant consonne, fermeture du o",
+                                        1066),
+                        new RegleRegex("([sz])(\\.?[" + Phoneme.C + "])", "$2", "disparition des s,z devant consonne",
+                                        1066),
 
                         /*
                          * XIIe siecle
@@ -345,8 +391,8 @@ public class EvolutionHistorique {
                         // evolution e non accentué entravé initial
                         new RegleRegex("([" + Phoneme.C + "]*)(e)(-?[" + Phoneme.C + "]+\\.)", "$1ɛ$3",
                                         "evolution non accentué entravé initial", 1150),
-                        // evolution diphtongation eu
-                        new RegleRegex("eu", "øu", "evolution diphtongation eu", 1150),
+                        // evolution diphtongation eu p. 29
+                        new RegleRegex("e'u", "ø'u", "evolution diphtongation eu", 1150),
                         // evolution diphtongation ei p. 28, 34
                         new RegleRegex("e(-?'?')i", "u$1e", "evolution diphtongation ei", 1150),
                         // assimilation réciproque d'aperture
@@ -358,10 +404,10 @@ public class EvolutionHistorique {
                          */
                         // réduction de la diphtongue, p. 36
                         new RegleRegex("ie", "je", "réduction de la diphtongue", 1200),
-                        // evolution diphtongation øu
-                        new RegleRegex("øu", "ø", "evolution diphtongation øu", 1225),
+                        // evolution diphtongation øu p. 29
+                        new RegleRegex("ø'u", "ø'", "evolution diphtongation ø'u", 1225),
                         // evolution diphtongation o ouvert p.28
-                        new RegleRegex("yø'", "ɥø'", "evolution diphtongation o ouvert-1", 1225),
+                        new RegleRegex("y'ø", "ɥø'", "evolution diphtongation o ouvert-1", 1225),
                         new RegleRegex("ɥø'", "ø'", "evolution diphtongation o ouvert-2", 1225),
                         // reduction, bascule d'accent p. 29
                         new RegleRegex("(u'e)(-?)", "we$2'", "reduction, bascule d'accent", 1225),
@@ -433,6 +479,9 @@ public class EvolutionHistorique {
                         // relachement l mouillé p.84
                         new RegleRegex("ʎ", "j", "relachement l mouillé", 1750),
                         // wa l'emporte p. 29
-                        new RegleRegex("we", "wa", "wa l'emporte", 1750));
+                        new RegleRegex("we", "wa", "wa l'emporte", 1750),
+                        // ouverture de e devant consonne articulée, p. 30
+                        new RegleRegex("e('?)([" + Phoneme.Carticulee + "])$", "ɛ$1$2",
+                                        "ouverture de e devant consonne articulée", 1750));
 
 }

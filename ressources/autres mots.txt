@@ -9,3 +9,6 @@ re-'.gem
 ri-'.pam
 wi'.num
 wir.tu-'.tem; test commentaire
+spa'.rem
+spe-'.rem
+pi'.ra

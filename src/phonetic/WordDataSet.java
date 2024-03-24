@@ -34,4 +34,12 @@ public class WordDataSet {
         }
         return values;
     }
+
+    public static List<WordRequest> wordRequestList(List<String> wordList) {
+        List<WordRequest> values = new ArrayList<>();
+        for (String aWord :wordList){
+            values.add(new WordRequest(aWord, "mot de ligne de commande"));
+        }
+        return values;
+    }
 }
