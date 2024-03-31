@@ -96,6 +96,11 @@ public class EvolutionHistorique {
                         /*
                          * IIe siecle
                          */
+                        // simplification des ll aprés voyelle longue, p. 75
+                        new RegleRegex("([" + Phoneme.V + "]-'?)l\\.l", "$1.l",
+                                        "simplification des ll aprés voyelle longue", 400),
+                        // palatisation n+j p.83
+                        new RegleRegex("nj", "ɲ", "palatisation n+j", 150),
                         // palatisation s+j p.85
                         new RegleRegex("\\.sj", "j\\.s", "palatisation s+j", 150),
                         // palatisation l+j p.89
@@ -143,8 +148,8 @@ public class EvolutionHistorique {
                         new RegleRegex("m\\.r", "m\\.br", "épenthèse par dénasalisation", 250),
                         new RegleRegex("m\\.l", "m\\.bl", "épenthèse par dénasalisation", 250),
                         new RegleRegex("n\\.r", "n\\.dr", "épenthèse par dénasalisation", 250),
-                        // changement des i bref non accentué p.19
-                        new RegleRegex("i(?!-)", "e", "changement des i bref non accentué", 250),
+                        // changement des i bref en e p.19
+                        new RegleRegex("i(?!-)", "e", "changement des i bref en e", 250),
                         // palatisation de k+e
                         new RegleRegex("ke", "tse", "palatisation de k+e", 250),
                         // β se renforce en v, p. 67
@@ -160,6 +165,8 @@ public class EvolutionHistorique {
                         /*
                          * IVe siecle
                          */
+                        // palatisation de nn, p 83
+                        new RegleRegex("n\\.n", "ɲ\\.ɲ", "palatisation de nn,", 400),
                         // changement des u bref à l'intérieur d'un mot p.19
                         new RegleRegex("(u)(?!\\b|-)\\b", "o$2", "changement des u bref à l'intérieur d'un mot",
                                         350),
@@ -194,6 +201,11 @@ public class EvolutionHistorique {
                         /*
                          * Ve siecle
                          */
+                        // changement des u brefs en o fermé à l'intérieur p.19
+                        new RegleRegex("(?<!['])(u)(?!-)(?='?[" + Phoneme.C + "].*\\.)", "o",
+                                        "changement des u brefs en o fermé",
+                                        400),
+
                         // spirantisation en ɣ p. 65
                         new RegleRegex("([" + Phoneme.V + "]-?'?\\.)(g)([" + Phoneme.V + "])", "$1ɣ$3",
                                         "spirantisation en ɣ", 450),
@@ -248,9 +260,7 @@ public class EvolutionHistorique {
                         // fermeture de la diphtongation spontané de e après consonne palatale, p. 38
                         new RegleRegex("tse'i", "tsi'", "fermeture de la diphtongation",
                                         550),
-                        // réduction de la diphtongue a'ɛ, p. 30
-                        new RegleRegex("a'ɛ", "ɛ-'", "réduction de la diphtongue a'ɛ",
-                                        550),
+
                         /*
                          * VIIe siecle
                          */
@@ -296,6 +306,15 @@ public class EvolutionHistorique {
                         // tout o devant n se ferme, p. 96
                         new RegleRegex("ɔ(-?'?\\.?)n", "o$1n", "tout o devant n se ferme",
                                         650),
+                        // fermeture de la diphtongue a'ɛ + nasale, p. 48
+                        new RegleRegex("a'ɛ(.?[mnɲ])", "a'i$1", "fermeture de la diphtongue a'ɛ + nasale",
+                                        650),
+                        // réduction de la diphtongue a'ɛ, p. 30
+                        new RegleRegex("a'ɛ", "ɛ-'", "réduction de la diphtongue a'ɛ",
+                                        650),
+                        // ɲ implosif ou final, p. 83
+                        new RegleRegex("ɲ(?=\\.|$)", "iɲ", "ɲ implosif ou final",
+                                        675),
                         /*
                          * VIIIe siecle
                          */
@@ -321,6 +340,9 @@ public class EvolutionHistorique {
 
                         new RegleRegex("ð$", "θ", "assourdissement de ð final", 750),
                         new RegleRegex("d$", "t", "assourdissement de d final", 750),
+                        // assourdissement et simplification ðt, p. 105
+                        new RegleRegex("ðt$", "t", "assourdissement de ðt final", 750),
+
                         /*
                          * IXe siecle
                          */
@@ -337,12 +359,21 @@ public class EvolutionHistorique {
                         // new RegleSansContexte("ie", "$1i$2", "nasalisation diphtongale de ie", 1050),
                         // evolution de ðr, p. 64
                         new RegleRegex("ðr", "r", "evolution de ðr", 950),
+                        // nasalisation précose du 2e élément de [aeo]i, p. 48
+                        new RegleRegex("([aeo])'i(\\.?[nɲ])", "$1'ĩ$2", "nasalisation précose du 2e élément de [aeo]i",
+                                        950),
                         /*
                          * XIe siecle
                          */
 
                         // nasalisation du a"
                         new RegleRegex("(a)('?)([nm])", "ɑ̃$2$3", "nasalisation du a", 1025),
+                        // nasalisation du 1er élément de ai, p. 48
+                        new RegleRegex("a'ĩ([nɲ])", "ɑ̃'ĩ$1", "nasalisation du 1er élément de ai", 1025),
+                        // nasalisation du 1er élément de ei, p. 48
+                        new RegleRegex("e'ĩ([nɲ])", "ɛ̃'ĩ$1", "nasalisation du 1er élément de ei", 1025),
+                        // nasalisation du 1er élément de oi, p. 51
+                        new RegleRegex("o'ĩ([nɲ])", "ɔ̃'ĩ$1", "nasalisation du 1er élément de ei", 1025),
                         // nasalisation du e"
                         new RegleRegex("(e)('?)([nm])", "ɛ̃$2$3", "nasalisation du e", 1050),
                         // evolution diphtongation ou p. 28
@@ -388,6 +419,8 @@ public class EvolutionHistorique {
                          */
                         // evolution diphtongation ai p. 34
                         new RegleRegex("(a)(-?'?)i", "ɛ$2", "evolution diphtongation ai", 1100),
+                        // fermeture du 1er élément p. 48
+                        new RegleRegex("ɑ̃'ĩn", "ɛ̃'ĩn", "fermeture du 1er élément", 1150),
                         // evolution e non accentué entravé initial
                         new RegleRegex("([" + Phoneme.C + "]*)(e)(-?[" + Phoneme.C + "]+\\.)", "$1ɛ$3",
                                         "evolution non accentué entravé initial", 1150),
@@ -397,6 +430,8 @@ public class EvolutionHistorique {
                         new RegleRegex("e(-?'?')i", "u$1e", "evolution diphtongation ei", 1150),
                         // assimilation réciproque d'aperture
                         new RegleRegex("(o'i)(-?)", "u'e$2", "assimilation réciproque d'aperture", 1175),
+                        // assimilation réciproque d'aperture des nasales, p 51
+                        new RegleRegex("(ɔ̃'ĩ)(-?)", "œ̃'ɛ̃$2", "assimilation réciproque d'aperture", 1175),
                         // nasalisation du o, page 47
                         new RegleRegex("(o)('?)([nm])", "ɔ̃$2$3", "nasalisation du o", 1250),
                         /*
@@ -411,6 +446,9 @@ public class EvolutionHistorique {
                         new RegleRegex("ɥø'", "ø'", "evolution diphtongation o ouvert-2", 1225),
                         // reduction, bascule d'accent p. 29
                         new RegleRegex("(u'e)(-?)", "we$2'", "reduction, bascule d'accent", 1225),
+                        // reduction, bascule d'accent des nasales p. 51
+                        new RegleRegex("(œ̃'ɛ̃)(-?)", "wɛ̃$2'", "reduction, bascule d'accent", 1225),
+
                         // bascule d'accent p. 50
                         new RegleRegex("i'ɛ̃", "jɛ̃'", "bascule d'accent", 1250),
                         // bascule d'accent p. 94
@@ -421,6 +459,8 @@ public class EvolutionHistorique {
                         new RegleRegex("en", "ɛ̃", "nasalisation du i", 1350),
                         // simplification des affiquées
                         new RegleRegex("t([ʃs])", "$1", "simplification des affiquées", 1250),
+                        // réduction de la diphtongue, p 48
+                        new RegleRegex("ɛ̃'ĩn", "ɛ̃'n", "réduction de la diphtongue", 1250),
                         // new RegleSansContexte("a-", "ie"),
                         // new RegleSansContexte("ie", "je"),
                         // new RegleSansContexte("\\.ne$", "n"),
@@ -449,7 +489,7 @@ public class EvolutionHistorique {
                          * XVIIe siecle
                          */
                         // dénasalisation implosive
-                        new RegleRegex("([" + Phoneme.Vnasale + "])('?)([nm])", "$1$2",
+                        new RegleRegex("([" + Phoneme.Vnasale + "])('?)([nm])([.^])", "$1$2$4",
                                         "dénasalisation implosive", 1600),
 
                         // amuissement "e" final p. 98

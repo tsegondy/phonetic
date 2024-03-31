@@ -144,6 +144,36 @@ public class EvolutionHistoriqueTest {
         }
 
         @Test
+        public void testPedem() {
+            testEvolution("pe'.dem", "pje'");
+        }
+
+        @Test
+        public void testPlanum() {
+            testEvolution("pla'.num", "plɛ̃'");
+        }
+
+        @Test
+        public void testPlenum() {
+            testEvolution("ple-'.num", "plɛ̃'");
+        }
+
+        @Test
+        public void testPotet() {
+            testEvolution("po'.tet", "pø'");
+        }
+
+        @Test
+        public void testPratum() {
+            testEvolution("pra'.tum", "pRe'");
+        }
+
+        @Test
+        public void testPugnum() {
+            testEvolution("pu'n.num", "pwɛ̃'");
+        }
+
+        @Test
         public void testTektum() {
             testEvolution("te-'k.tum", "twa'");
         }
@@ -152,7 +182,10 @@ public class EvolutionHistoriqueTest {
         public void testTenerum() {
             testEvolution("te'.ne.rum", "tɛ̃'dR");
         }
-
+        @Test
+        public void testWinkere() {
+            testEvolution("wi'n.ke.re", "vɛ̃'kR");
+        }
         @Test
         public void testWitam() {
             testEvolution("wi-'.tam", "vi-'");
